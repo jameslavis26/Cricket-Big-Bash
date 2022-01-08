@@ -65,7 +65,7 @@ for i in range(data.shape[0]):
 
     supersub_keys = [k for k in dictionary.keys() if "supersubs" in k]
     drop_keys = [k for k in dictionary.keys() if "registry_people_" in k]
-    player_keys = [k for k in dictionary.keys() if "players_" in k]
+    player_keys = [k for k in dictionary.keys() if "players_" in k and "players_team" not in k]
 
     for k in supersub_keys:
         team = k.split("_")[1]
@@ -78,10 +78,16 @@ for i in range(data.shape[0]):
     for k in player_keys:
         team = k.split("_")[1]
         team_num = 0 if team == dictionary["teams_0"] else 1
+        # print(team, dictionary["teams_0"])
         dictionary["extra_players_team_{}".format(team_num)] = dictionary.pop(k)
 
     for key in dictionary.keys():
         result.loc[index, key] = dictionary[key]
+
+    # print(dictionary.keys())
+    # [print(i) for i in dictionary.keys()]
+    # break
+    print(i, "/", data.shape[0], end = '\r')
 
 
 # %%
